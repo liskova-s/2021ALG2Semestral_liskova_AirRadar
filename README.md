@@ -45,6 +45,13 @@ ______2.1.4.3 Uložení plánovaných vnitroevropských příletů řazených dl
 ______2.1.4.4 Uložení plánovaných vnitroevropských příletů řazených abecedně dle původní destinace  
 ______2.1.4.5 Uložení plánovaných vnitrostátních příletů řazených dle času příletu    
 ______2.1.4.6 Uložení plánovaných vnitrostátních příletů řazených abecedně dle původní destinace    
+____2.1.5 Uložení plánovaných odletů    
+______2.1.5.1 Uložení plánovaných odletů řazených dle času odletu  
+______2.1.5.2 Uložení plánovaných odletů řazených abecedně dle původní destinace  
+______2.1.5.3 Uložení plánovaných vnitroevropských odletů řazených dle času odletu  
+______2.1.5.4 Uložení plánovaných vnitroevropských odletů řazených abecedně dle původní destinace  
+______2.1.5.5 Uložení plánovaných vnitrostátních odletů řazených dle času odletu    
+______2.1.5.6 Uložení plánovaných vnitrostátních odletů řazených abecedně dle původní destinace   
 __2.2 **Uložení do textového souboru**  
 ____2.2.1 Uložení výpisu nástěnky    
 ____2.2.2 Uložení kompletního výpisu všech dostupných informací  
@@ -55,7 +62,14 @@ ______2.2.4.2 Uložení plánovaných příletů řazených abecedně dle původ
 ______2.2.4.3 Uložení plánovaných vnitroevropských příletů řazených dle času příletu  
 ______2.2.4.4 Uložení plánovaných vnitroevropských příletů řazených abecedně dle původní destinace  
 ______2.2.4.5 Uložení plánovaných vnitrostátních příletů řazených dle času příletu    
-______2.2.4.6 Uložení plánovaných vnitrostátních příletů řazených abecedně dle původní destinace
+______2.2.4.6 Uložení plánovaných vnitrostátních příletů řazených abecedně dle původní destinace  
+____2.2.5 Uložení plánovaných odletů    
+______2.2.5.1 Uložení plánovaných odletů řazených dle času odletu  
+______2.2.5.2 Uložení plánovaných odletů řazených abecedně dle původní destinace  
+______2.2.5.3 Uložení plánovaných vnitroevropských odletů řazených dle času odletu  
+______2.2.5.4 Uložení plánovaných vnitroevropských odletů řazených abecedně dle původní destinace  
+______2.2.5.5 Uložení plánovaných vnitrostátních odletů řazených dle času odletu    
+______2.2.5.6 Uložení plánovaných vnitrostátních odletů řazených abecedně dle původní destinace   
        
     
 #### Struktura vstupních a výstupních souborů
