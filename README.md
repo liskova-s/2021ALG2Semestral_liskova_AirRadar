@@ -69,7 +69,7 @@ Binární soubory jsou ve formátu: (long - čas poslední aktualizace v sekund�
 
 #### Objektový návrh - diagram
 ![AirRadar](AirRadar_diagram.png)
-[Diagram link](https://drive.google.com/file/d/1GoTmgKgn3MQHBkh5TMceui2VmUbsW5D3/view?usp=sharing)
+[Diagram link](https://drive.google.com/file/d/11JvClS7YhgJ69gYN4qYAK9krerZML83f/view?usp=sharing)
   
 ### Testování
 ### Popis fungování externí knihovny - Jsoup
