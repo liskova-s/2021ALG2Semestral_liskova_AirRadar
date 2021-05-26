@@ -86,6 +86,156 @@ Binární soubory jsou ve formátu: (long - čas poslední aktualizace v sekund�
 [Diagram link](https://drive.google.com/file/d/11JvClS7YhgJ69gYN4qYAK9krerZML83f/view?usp=sharing)
   
 ### Testování
+Testování bylo prováděno na datech z umělého souboru TestData.csv pro fixní čas 19:18. Testování je nutné spouštět z testovací main metody. Testování nepokrývá funkce třídy Scraper a příkaz -r (refresh), který je na fungování třídy vázán. Testování těchto funkcí je možné provést porovnáním se zdrojovými tabulkami EN ROUTE/SCHEDULED TO PRG a SCHEDULED DEPARTURES na [flightaware.com](https://flightaware.com/live/airport/LKPR).
+
+       All test runs operated by testing main method with fixed dataset TestData.csv and fixed time 19:18.
+       Dashboard appears as first output of each run automatically, therefore this output is not mentioned in tests 1-11.
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 0 (DASHBOARD - CURRENT AIRWINDOW + CURRENT AIRWINDOW AIRCRAFT TYPES)
+       TEST 1 EXPECTED OUTPUT:
+
+       Vaclav Havel Airport Prague    PRG   LKPR                                                 19:18     CEST     2021-05-26 
+       _______________________________________________________________________________________________________________________
+                                                           SECTOR RADAR
+
+                Current Air window
+                A     DFC4DM                    Aeropartner                                        Warsaw Frederic Chopin     WAW   18:18    CEST   19:25    CEST
+                A     ECC101                Eclair Aviation               Prague                       VáclavHavelAirport     PRG   18:11    CEST   19:27    CEST
+                D    NTF164G              OK Aviation Group       Czech Republic             Ostrava Leos Janacek Airport     OSR   19:10    CEST                
+
+
+                _____________________________________________________________________
+                   Type code                                      Aircraft type   Num
+                        PC12                    Pilatus PC-12(single-turboprop)     1
+                     Unknown                                            Unknown     1
+                        C510                              CessnaCitationMustang     1
+
+
+       -h for help
+       _______________________________________________________________________________________________________________________
+       source: https://flightaware.com/live/airport/LKPR                                            last refresh: 19:18
+
+
+       TEST 1 STATUS: PASSED
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 1 (ARRIVALS)
+       USER INPUT: -arrivals
+       TEST 1 EXPECTED OUTPUT:
+
+                                                               ARRIVALS
+       ______________________________________________________________________________________________________________________________________________
+            Flight                       Provider                                                       Airport         Departure             Arrival            
+
+       A    KLM1359                            KLM          Netherlands                        AmsterdamSchiphol     AMS   21:06    CEST   22:18    CEST
+       A    VLG996K               Vueling Airlines                Spain                          Barcelona Int'l     BCN   07:16    CEST   09:08    CEST
+       A     UPS295          United Parcel Service                                 Budapest Ferenc Liszt Airport     BUD   21:11    CEST   21:55    CEST
+       A    QTR44NJ                  Qatar Airways                 Doha            Budapest Ferenc Liszt Airport     BUD   17:13    CEST   17:58    CEST
+       A     ABR2RG                   ASL Airlines               Dublin                 Charles de Gaulle/Roissy     CDG   04:30    CEST   06:29    CEST
+       A     CSA509                 Czech Airlines        CzechRepublic                               Copenhagen     CPH   20:03    CEST   21:05    CEST
+       A    CLH1392             Lufthansa Cityline                                               Frankfurt Int'l     FRA   08:51    CEST   09:40    CEST
+       A    PGA1246                     Portugalia                              General Humberto Delgado Airport     LIS   14:40    WEST   18:51    CEST
+       A     LZB301                   Bulgaria Air             Bulgaria                            Sofia Airport    LBSF   10:13    EEST   10:42    CEST
+       A     ECC203                Eclair Aviation               Prague                                  Vnukovo     VKO   20:57     MSK   22:15    CEST
+       A     ECC101                Eclair Aviation               Prague                       VáclavHavelAirport     PRG   18:11    CEST   19:27    CEST
+       A     DFC4DM                    Aeropartner                                        Warsaw Frederic Chopin     WAW   18:18    CEST   19:25    CEST
+       A     SCR187                        Jetstar                                                        Zurich     ZRH   09:35    CEST   10:26    CEST
+
+       TEST 1 STATUS: PASSED
+
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 2 (ARRIVALS FROM CZ BY DESTINATION)
+       USER INPUT: -arrivals -d -CZ
+       TEST 2 EXPECTED OUTPUT:
+                                                               ARRIVALS
+       ______________________________________________________________________________________________________________________________________________
+            Flight                       Provider                                                       Airport         Departure             Arrival            
+
+       A     ECC101                Eclair Aviation               Prague                       VáclavHavelAirport     PRG   18:11    CEST   19:27    CEST
+
+       TEST 2 STATUS: PASSED
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 3 (ARRIVALS INVALID ARTIFICIAL COMMANDS)
+       USER INPUT: -arrivals -airtypesf nhj
+       TEST 3 EXPECTED OUTPUT:
+
+       Invalid command combination.
+
+       TEST 3 STATUS: PASSED
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 4 (DEPARTURES TO EU BY TIME)
+       USER INPUT: -departures -t -EU
+       TEST 4 EXPECTED OUTPUT:
+
+                              DEPARTURES
+       __________________________________________________________________________________________________________________________
+            Flight                       Provider                                                       Airport         Departure                                
+
+       D    NTF164G              OK Aviation Group       Czech Republic             Ostrava Leos Janacek Airport     OSR   19:10    CEST                
+       D    VLG8653               Vueling Airlines                Spain                          Barcelona Int'l     BCN   10:29    EEST                
+       D    CLH1393             Lufthansa Cityline                                               Frankfurt Int'l     FRA   10:32    CEST   
+
+       TEST 4 STATUS: PASSED
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 5 (AIRFCRAFT TYPES IN CURRENT TIME WINDOW)
+       USER INPUT: -departures -t -EU
+       TEST 5 EXPECTED OUTPUT:
+
+                                                                   AIRCRAFT TYPES
+                ______________________________________________________________________________________________________
+                   Type code                                      Aircraft type   Num
+                        PC12                    Pilatus PC-12(single-turboprop)     1
+                     Unknown                                            Unknown     1
+                        C510                              CessnaCitationMustang     1
+
+       TEST 5 STATUS: PASSED
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 6 (SAVE CURRENT AIRWINDOW NO FILE)
+       USER INPUT: -scw 
+       TEST 6 EXPECTED OUTPUT:
+
+       >>> Can not operate without filename.
+
+       TEST 6 STATUS: PASSED
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 7 (SAVE CURRENT AIRWINDOW INVALID FILE FORMAT)
+       USER INPUT: -scw report
+       TEST 7 EXPECTED OUTPUT:
+
+       Invalid file format.
+
+       TEST 7 STATUS: PASSED
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 8 (SAVE CURRENT AIRWINDOW)
+       USER INPUT: -scw report.bin
+       TEST 8 EXPECTED OUTPUT:
+
+       --- no output expected --- file saved to report.bin
+
+       TEST 8 STATUS: PASSED
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 9 (-S PREFIX NO FILE)
+       USER INPUT: -s -arrivals
+       TEST 9 EXPECTED OUTPUT:
+
+       Can not operate without filename and command.
+
+       TEST 9 STATUS: PASSED
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 10 (-S PREFIX INVALID COMMAND)
+       USER INPUT: -s report.txt -r
+       TEST 10 EXPECTED OUTPUT:
+
+       Unsaveable command.
+
+       TEST 10 STATUS: PASSED
+       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+       TEST 11 (-S PREFIX SAVING)
+       USER INPUT: -s report.txt -home
+       TEST 11 EXPECTED OUTPUT:
+
+       --- no output expected --- file saved to report.txt
+
+       TEST 11 STATUS: PASSED
 ### Popis fungování externí knihovny - Jsoup
 Jako externí knihovna byla zvolena knihovna Jsoup Java real-world HTML Parser pro zpracování HTML souborů.\
 Program využívá příkaz Jsoup.connect() knihovny pro získání HTML souboru s aktuálními daty ze zadané webové adresy.\
