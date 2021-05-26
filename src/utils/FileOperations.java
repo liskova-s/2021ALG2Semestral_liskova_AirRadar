@@ -15,8 +15,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,9 +74,11 @@ public class FileOperations {
      */
     public static void saveBin(String output, String filename, LocalTime lastRefresh, LocalDate lastRef, String tz) throws IOException {
         try (DataOutputStream out = new DataOutputStream(new FileOutputStream(filename))) {
+           
             out.writeLong(lastRefresh.toSecondOfDay());
             out.writeUTF(tz);
-            out.writeUTF(lastRef.toString());
+            Date lastd=java.sql.Date.valueOf(lastRef);
+            out.writeUTF(lastd.toString());
             out.writeUTF(output);
         }
     }

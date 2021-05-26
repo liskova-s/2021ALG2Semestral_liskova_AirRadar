@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -37,9 +38,9 @@ public class LKPRRadarSector implements RadarInfo {
     private final String ICAO = "LKPR";
     private final String SOURCEURL = "https://flightaware.com/live/airport/LKPR";
     private final String TIMEZONE = "CEST";
-    private final List<String> euairports = load("EUAirports.csv", 2);
-    private final List<String> czairports = load("CZAirports.csv", 0);
-    private final LocalTime currentTime = LocalTime.now();
+    private final List<String> euairports;
+    private final List<String> czairports;
+    private final LocalTime currentTime;
     private final LocalDate currentDate = LocalDate.now();
 
     private LocalTime lastrefresht;
@@ -53,11 +54,31 @@ public class LKPRRadarSector implements RadarInfo {
      * @throws IOException 
      */
     public LKPRRadarSector() throws IOException {
+        this.czairports = load("CZAirports.csv", 0);
+        this.euairports = load("EUAirports.csv", 2);
         airlist = new ArrayList();
+        currentTime = LocalTime.now();
         scrp = new Scraper(SOURCEURL);
         scrp.scrape();
         airlist = toList(scrp.getAirlist());
         lastrefresht = LocalTime.now();
+        lastrefreshd = LocalDate.now();
+    }
+    
+    /**
+     * TESTING-ONLY CONSTRUCTOR for fixed file data
+     * @param airlist double aary containing aircraft information
+     * @param time testing 'current time' value
+     * @throws java.io.IOException
+     */
+    public LKPRRadarSector(String[][]airlist,LocalTime time) throws IOException{
+        //for testing with fixed data only
+        this.czairports = load("CZAirports.csv", 0);
+        this.euairports = load("EUAirports.csv", 2);
+        this.airlist = new ArrayList();
+        currentTime = time;
+        this.airlist = toList(airlist);
+        lastrefresht = time;
         lastrefreshd = LocalDate.now();
     }
 
@@ -191,7 +212,7 @@ public class LKPRRadarSector implements RadarInfo {
                 int landsecs = aircraft.getLanding().toSecondOfDay();
                 int windowlower = currentTime.toSecondOfDay() - 3 * 30; //airwindow: landing -8 +- 3min  
                 int windowupper = currentTime.toSecondOfDay() + 3 * 30;
-                if (landsecs - 8 <= windowupper && landsecs - 8 >= windowlower) {
+                if (landsecs - 8*60 <= windowupper && landsecs - 8*60 >= windowlower) {
                     currentAW.add(aircraft);
                 }
             }
@@ -200,7 +221,7 @@ public class LKPRRadarSector implements RadarInfo {
                 int landsecs = aircraft.getTakeOff().toSecondOfDay();
                 int windowlower = currentTime.toSecondOfDay() - 3 * 30; //airwindow: landing -8 +- 3min  
                 int windowupper = currentTime.toSecondOfDay() + 3 * 30;
-                if (landsecs + 8 <= windowupper && landsecs + 8 >= windowlower) {
+                if (landsecs + 8*60 <= windowupper && landsecs + 8*60 >= windowlower) {
                     currentAW.add(aircraft);
                 }
             }
@@ -415,14 +436,22 @@ public class LKPRRadarSector implements RadarInfo {
         Map<String, Object[]> map = new HashMap<>();
         for (Aircraft a : currentAirWindow()) {
             String code = a.getAircraftTypeCode();
+            String type=a.getAircraftType();
+            if (code.equals("")){
+                code="Unknown";
+            }
+            if (type.equals("")){
+                type="Unknown";
+            }
+            if(code!=null){
             if (!map.containsKey(code)) {
-                Object[] arr = {a.getAircraftType(), 1};
+                Object[] arr = {type, 1};
                 map.put(code, arr);
             } else {
                 int count = (int) map.get(code)[1] + 1;
-                Object[] arr = {a.getAircraftType(), count};
+                Object[] arr = {type, count};
                 map.put(code, arr);
-            }
+            }}
         }
         return map;
     }
@@ -458,7 +487,6 @@ public class LKPRRadarSector implements RadarInfo {
         for (Aircraft a : currentAirWindow()) {
             sb.append("         ");
             sb.append(a.fullToString());
-            sb.append(System.getProperty("Line.separator"));
         }
         if (sb.toString().equals("")) {
             return "         Currently empty.";

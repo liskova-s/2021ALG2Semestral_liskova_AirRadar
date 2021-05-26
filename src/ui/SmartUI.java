@@ -6,6 +6,10 @@
 package ui;
 
 import app.LKPRRadarSector;
+import java.io.BufferedReader;                         //essential for test main()
+import java.io.File;                                   //essential for test main()
+import java.io.FileNotFoundException;
+import java.io.FileReader;                             //essential for test main()
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import utils.FileOperations;
+import java.time.LocalTime;                            //essential for test main()
 
 /**
  *
@@ -28,6 +33,7 @@ public class SmartUI {
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String[] args){
         try{
         sector = new LKPRRadarSector();
@@ -45,6 +51,44 @@ public class SmartUI {
             System.out.println("Unable to initialize new sector.");
         }
     }
+     
+    /**
+     * TESTING MAIN
+     *
+     * @param args
+     */
+    /*
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        String testFile = "TestData.csv";
+        LocalTime time = LocalTime.of(19, 18);
+        File sourcefile = new File(System.getProperty("user.dir") + File.separator + "ArtificialData" + File.separator + testFile);
+        String[][] airlist = new String[21][14];
+        try (BufferedReader br = new BufferedReader(new FileReader(sourcefile))) {
+            String line;
+            for (int i = 0; i < airlist.length; i++) {
+                if ((line = br.readLine()) != null) {
+                    airlist[i] = line.split(",");
+                }
+            }
+        }
+        System.out.println(Arrays.deepToString(airlist));
+        try {
+            sector = new LKPRRadarSector(airlist, time);
+            sc = new Scanner(System.in);
+            System.out.println(pause());
+            System.out.println(dashboard());
+            while (!exit) {
+                try {
+                    execute();
+                } catch (IOException e) {
+                    System.out.println("Acces to essential files was denied.");
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println("Unable to initialize new sector.");
+        }
+
+    }*/
 
     /**
      * *
@@ -77,18 +121,23 @@ public class SmartUI {
                 exit = true;
                 break;
             case "-arrivals":
-                System.out.println(pause());
                 switch (scan.length) {
                     case 1:
+                        System.out.println(pause());
                         System.out.println(sector.createPrint(sector.scheduledArrivalsByTime(), "A"));
                         break;
                     case 2:
                         switch (scan[1]) {
                             case "-t":
+                                System.out.println(pause());
                                 System.out.println(sector.createPrint(sector.scheduledArrivalsByTime(), "A"));
                                 break;
                             case "-d":
+                                System.out.println(pause());
                                 System.out.println(sector.createPrint(sector.scheduledArrivalsByDestination(), "A"));
+                                break;
+                            default:
+                                System.out.println("Invalid command combination.");
                                 break;
                         }
                         break;
@@ -98,42 +147,57 @@ public class SmartUI {
                         case "-t":
                             switch (scan[2]) {
                                 case "-EU":
+                                    System.out.println(pause());
                                     System.out.println(sector.createPrint(sector.scheduledEUArrivalsByTime(), "A"));
                                     break;
                                 case "-CZ":
+                                    System.out.println(pause());
                                     System.out.println(sector.createPrint(sector.scheduledCZArrivalsByTime(), "A"));
+                                    break;
+                                default:
+                                    System.out.println("Invalid command combination.");
                                     break;
                             }
                             break;
                         case "-d":
                             switch (scan[2]) {
                                 case "-EU":
+                                    System.out.println(pause());
                                     System.out.println(sector.createPrint(sector.scheduledEUArrivalsByDestination(), "A"));
                                     break;
                                 case "-CZ":
+                                    System.out.println(pause());
                                     System.out.println(sector.createPrint(sector.scheduledCZArrivalsByDestination(), "A"));
                                     break;
+                                default:
+                                    System.out.println("Invalid command combination.");
+                                    break;
                             }
+                        default:
+                            System.out.println("Invalid command combination.");
                             break;
 
                     }
                 }
                 break;
             case "-departures":
-                System.out.println(pause());
                 switch (scan.length) {
                     case 1:
+                        System.out.println(pause());
                         System.out.println(sector.createPrint(sector.scheduledDeparturesByTime(), "D"));
                         break;
                     case 2:
                         switch (scan[1]) {
                             case "-t":
+                                System.out.println(pause());
                                 System.out.println(sector.createPrint(sector.scheduledDeparturesByTime(), "D"));
                                 break;
                             case "-d":
+                                System.out.println(pause());
                                 System.out.println(sector.createPrint(sector.scheduledDeparturesByDestination(), "D"));
                                 break;
                             default:
+                                System.out.println("Invalid command combination.");
                                 break;
                         }
                         break;
@@ -145,26 +209,35 @@ public class SmartUI {
                         case "-t":
                             switch (scan[2]) {
                                 case "-EU":
+                                    System.out.println(pause());
                                     System.out.println(sector.createPrint(sector.scheduledEUDeparturesByTime(), "D"));
                                     break;
                                 case "-CZ":
+                                    System.out.println(pause());
                                     System.out.println(sector.createPrint(sector.scheduledCZDeparturesByTime(), "D"));
                                     break;
                                 default:
+                                    System.out.println("Invalid command combination.");
                                     break;
                             }
                             break;
                         case "-d":
                             switch (scan[2]) {
                                 case "-EU":
+                                    System.out.println(pause());
                                     System.out.println(sector.createPrint(sector.scheduledEUDeparturesByDestination(), "D"));
                                     break;
                                 case "-CZ":
+                                    System.out.println(pause());
                                     System.out.println(sector.createPrint(sector.scheduledCZDeparturesByDestination(), "D"));
                                     break;
                                 default:
+                                    System.out.println("Invalid command combination.");
                                     break;
                             }
+                        default:
+                            System.out.println("Invalid command combination.");
+
                             break;
                     }
                 }
