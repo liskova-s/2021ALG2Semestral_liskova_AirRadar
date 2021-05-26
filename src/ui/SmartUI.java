@@ -465,8 +465,6 @@ public class SmartUI {
         sb.append(System.getProperty("line.separator"));
         sb.append("                -scw <filename>         Saves current time window report to <filename> file (.txt).     ");
         sb.append(System.getProperty("line.separator"));
-        sb.append("                -sch <filename>         Saves current traffic histogram to <filename> file (png).");
-        sb.append(System.getProperty("line.separator"));
         sb.append("                -sfr <filename>         Saves full report with all information available at current time to <filename> (.txt).");
         sb.append(System.getProperty("line.separator"));
         sb.append("                -s <filename> <command> Any output of the above mentioned commands might be saved to .txt or to .bin as binary by -s prefix. ");
