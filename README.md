@@ -82,8 +82,8 @@ Binární soubory jsou ve formátu: (long - čas poslední aktualizace v sekund�
                             
 
 #### Objektový návrh - diagram
-![AirRadar](AirRadar_diagram.png)
-[Diagram link](https://drive.google.com/file/d/11JvClS7YhgJ69gYN4qYAK9krerZML83f/view?usp=sharing)
+![AirRadar](https://github.com/liskova-s/2021ALG2Semestral_liskova_AirRadar/blob/main/AirRadar_diagram.png)
+[Diagram link](https://drive.google.com/file/d/1ncAj7x1So6zl8dzqBFiHBpdZ31gws1WN/view?usp=sharing)
   
 ### Testování
 Testování bylo prováděno na datech z umělého souboru TestData.csv pro fixní čas 19:18. Testování je nutné spouštět z testovací main metody. Testování nepokrývá funkce třídy Scraper a příkaz -r (refresh), který je na fungování třídy vázán. Testování těchto funkcí je možné provést porovnáním se zdrojovými tabulkami EN ROUTE/SCHEDULED TO PRG a SCHEDULED DEPARTURES na [flightaware.com](https://flightaware.com/live/airport/LKPR).
