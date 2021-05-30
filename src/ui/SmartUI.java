@@ -32,6 +32,7 @@ public class SmartUI {
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String[] args) {
         try {
             sector = new LKPRRadarSector();
@@ -72,11 +73,7 @@ public class SmartUI {
             System.out.println(pause());
             System.out.println(dashboard());
             while (!exit) {
-                try {
                     execute();
-                } catch (IOException e) {
-                    System.out.println("Acces to essential files was denied.");
-                }
             }
         } catch (IOException ex) {
             System.out.println("Unable to initialize new sector.");
