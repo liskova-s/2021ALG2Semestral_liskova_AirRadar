@@ -8,7 +8,6 @@ package ui;
 import app.LKPRRadarSector;
 import java.io.BufferedReader;                         //essential for test main()
 import java.io.File;                                   //essential for test main()
-import java.io.FileNotFoundException;
 import java.io.FileReader;                             //essential for test main()
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,34 +32,30 @@ public class SmartUI {
     /**
      * @param args the command line arguments
      */
-    
-    public static void main(String[] args){
-        try{
-        sector = new LKPRRadarSector();
-        sc = new Scanner(System.in);
-        System.out.println(pause());
-        System.out.println(dashboard());
-        while (!exit) {
-            try {
-                execute();
-            } catch (IOException e) {
-                System.out.println("Acces to essential files was denied.");
+    public static void main(String[] args) {
+        try {
+            sector = new LKPRRadarSector();
+            sc = new Scanner(System.in);
+            System.out.println(pause());
+            System.out.println(dashboard());
+            while (!exit) {
+                    execute();
             }
-        }
-        }catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println("Unable to initialize new sector.");
         }
     }
-     
+
     /**
      * TESTING MAIN
      *
      * @param args
      */
     /*
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args) {
         String testFile = "TestData.csv";
         LocalTime time = LocalTime.of(19, 18);
+        try{
         File sourcefile = new File(System.getProperty("user.dir") + File.separator + "ArtificialData" + File.separator + testFile);
         String[][] airlist = new String[21][14];
         try (BufferedReader br = new BufferedReader(new FileReader(sourcefile))) {
@@ -71,7 +66,6 @@ public class SmartUI {
                 }
             }
         }
-        System.out.println(Arrays.deepToString(airlist));
         try {
             sector = new LKPRRadarSector(airlist, time);
             sc = new Scanner(System.in);
@@ -87,16 +81,19 @@ public class SmartUI {
         } catch (IOException ex) {
             System.out.println("Unable to initialize new sector.");
         }
+        }catch(IOException e){
+            System.out.println("File not found.");
+        }
 
-    }*/
-
+    }
+     */
     /**
      * *
      * Smart manager for user input, process and execute.
      *
      * @throws IOException
      */
-    private static void execute() throws IOException {
+    private static void execute(){
         String[] scan;
         scan = sc.nextLine().split(" ");
         switch (scan[0]) {
@@ -121,126 +118,10 @@ public class SmartUI {
                 exit = true;
                 break;
             case "-arrivals":
-                switch (scan.length) {
-                    case 1:
-                        System.out.println(pause());
-                        System.out.println(sector.createPrint(sector.scheduledArrivalsByTime(), "A"));
-                        break;
-                    case 2:
-                        switch (scan[1]) {
-                            case "-t":
-                                System.out.println(pause());
-                                System.out.println(sector.createPrint(sector.scheduledArrivalsByTime(), "A"));
-                                break;
-                            case "-d":
-                                System.out.println(pause());
-                                System.out.println(sector.createPrint(sector.scheduledArrivalsByDestination(), "A"));
-                                break;
-                            default:
-                                System.out.println("Invalid command combination.");
-                                break;
-                        }
-                        break;
-                }
-                if (scan.length > 2) {
-                    switch (scan[1]) {
-                        case "-t":
-                            switch (scan[2]) {
-                                case "-EU":
-                                    System.out.println(pause());
-                                    System.out.println(sector.createPrint(sector.scheduledEUArrivalsByTime(), "A"));
-                                    break;
-                                case "-CZ":
-                                    System.out.println(pause());
-                                    System.out.println(sector.createPrint(sector.scheduledCZArrivalsByTime(), "A"));
-                                    break;
-                                default:
-                                    System.out.println("Invalid command combination.");
-                                    break;
-                            }
-                            break;
-                        case "-d":
-                            switch (scan[2]) {
-                                case "-EU":
-                                    System.out.println(pause());
-                                    System.out.println(sector.createPrint(sector.scheduledEUArrivalsByDestination(), "A"));
-                                    break;
-                                case "-CZ":
-                                    System.out.println(pause());
-                                    System.out.println(sector.createPrint(sector.scheduledCZArrivalsByDestination(), "A"));
-                                    break;
-                                default:
-                                    System.out.println("Invalid command combination.");
-                                    break;
-                            }
-                        default:
-                            System.out.println("Invalid command combination.");
-                            break;
-
-                    }
-                }
+                arrivalsSwitch(scan);
                 break;
             case "-departures":
-                switch (scan.length) {
-                    case 1:
-                        System.out.println(pause());
-                        System.out.println(sector.createPrint(sector.scheduledDeparturesByTime(), "D"));
-                        break;
-                    case 2:
-                        switch (scan[1]) {
-                            case "-t":
-                                System.out.println(pause());
-                                System.out.println(sector.createPrint(sector.scheduledDeparturesByTime(), "D"));
-                                break;
-                            case "-d":
-                                System.out.println(pause());
-                                System.out.println(sector.createPrint(sector.scheduledDeparturesByDestination(), "D"));
-                                break;
-                            default:
-                                System.out.println("Invalid command combination.");
-                                break;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                if (scan.length > 2) {
-                    switch (scan[1]) {
-                        case "-t":
-                            switch (scan[2]) {
-                                case "-EU":
-                                    System.out.println(pause());
-                                    System.out.println(sector.createPrint(sector.scheduledEUDeparturesByTime(), "D"));
-                                    break;
-                                case "-CZ":
-                                    System.out.println(pause());
-                                    System.out.println(sector.createPrint(sector.scheduledCZDeparturesByTime(), "D"));
-                                    break;
-                                default:
-                                    System.out.println("Invalid command combination.");
-                                    break;
-                            }
-                            break;
-                        case "-d":
-                            switch (scan[2]) {
-                                case "-EU":
-                                    System.out.println(pause());
-                                    System.out.println(sector.createPrint(sector.scheduledEUDeparturesByDestination(), "D"));
-                                    break;
-                                case "-CZ":
-                                    System.out.println(pause());
-                                    System.out.println(sector.createPrint(sector.scheduledCZDeparturesByDestination(), "D"));
-                                    break;
-                                default:
-                                    System.out.println("Invalid command combination.");
-                                    break;
-                            }
-                        default:
-                            System.out.println("Invalid command combination.");
-
-                            break;
-                    }
-                }
+                departuresSwitch(scan);
                 break;
             case "-airtypes":
                 System.out.println(pause());
@@ -269,106 +150,255 @@ public class SmartUI {
                 }
                 break;
             case "-s":
-                if (scan.length < 3) {
-                    System.out.println("Can not operate without filename and command.");
-                } else if ((!scan[1].substring(scan[1].length() - 4, scan[1].length()).equals(".txt")) && (!scan[1].substring(scan[1].length() - 4, scan[1].length()).equals(".bin"))) {
-                    System.out.println("Invalid file format.");
-                } else {
-                    ArrayList<String> commands = new ArrayList(Arrays.asList("-home", "-about", "-h", "-arrivals", "-departures", "-airtypes", "-airtypesf"));                   //nedokonceno
-                    if (!commands.contains(scan[2])) {
-                        System.out.println("Unsaveable command.");
-                    } else {
-                        switch (scan[2]) {
-                            case "-home":
-                                FileOperations.save(dashboard(), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                break;
-                            case "-h":
-                                FileOperations.save(help(), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                break;
+                saveCommandSwitch(scan);
+                break;
+            default:
+                break;
+        }
+    }
 
-                            case "-about":
-                                FileOperations.save(about(), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                break;
+    /**
+     * Switch for command -arrivals
+     *
+     * @param scan - String array with user input sequence
+     */
+    public static void arrivalsSwitch(String[] scan) {
+        switch (scan.length) {
+            case 1:
+                System.out.println(pause());
+                System.out.println(sector.createPrint(sector.scheduledArrivalsByTime(), "A"));
+                break;
+            case 2:
+                switch (scan[1]) {
+                    case "-t":
+                        System.out.println(pause());
+                        System.out.println(sector.createPrint(sector.scheduledArrivalsByTime(), "A"));
+                        break;
+                    case "-d":
+                        System.out.println(pause());
+                        System.out.println(sector.createPrint(sector.scheduledArrivalsByDestination(), "A"));
+                        break;
+                    default:
+                        System.out.println("Invalid command combination.");
+                        break;
+                }
+                break;
+        }
+        if (scan.length > 2) {
+            switch (scan[1]) {
+                case "-t":
+                    switch (scan[2]) {
+                        case "-EU":
+                            System.out.println(pause());
+                            System.out.println(sector.createPrint(sector.scheduledEUArrivalsByTime(), "A"));
+                            break;
+                        case "-CZ":
+                            System.out.println(pause());
+                            System.out.println(sector.createPrint(sector.scheduledCZArrivalsByTime(), "A"));
+                            break;
+                        default:
+                            System.out.println("Invalid command combination.");
+                            break;
+                    }
+                    break;
+                case "-d":
+                    switch (scan[2]) {
+                        case "-EU":
+                            System.out.println(pause());
+                            System.out.println(sector.createPrint(sector.scheduledEUArrivalsByDestination(), "A"));
+                            break;
+                        case "-CZ":
+                            System.out.println(pause());
+                            System.out.println(sector.createPrint(sector.scheduledCZArrivalsByDestination(), "A"));
+                            break;
+                        default:
+                            System.out.println("Invalid command combination.");
+                            break;
+                    }
+                default:
+                    System.out.println("Invalid command combination.");
+                    break;
 
-                            case "-arrivals":
-                                if (scan.length == 3) {
+            }
+        }
+    }
+
+    /**
+     * Switch for command -arrivals
+     *
+     * @param scan - String array with user input sequence
+     */
+    public static void departuresSwitch(String[] scan) {
+        switch (scan.length) {
+            case 1:
+                System.out.println(pause());
+                System.out.println(sector.createPrint(sector.scheduledDeparturesByTime(), "D"));
+                break;
+            case 2:
+                switch (scan[1]) {
+                    case "-t":
+                        System.out.println(pause());
+                        System.out.println(sector.createPrint(sector.scheduledDeparturesByTime(), "D"));
+                        break;
+                    case "-d":
+                        System.out.println(pause());
+                        System.out.println(sector.createPrint(sector.scheduledDeparturesByDestination(), "D"));
+                        break;
+                    default:
+                        System.out.println("Invalid command combination.");
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+        if (scan.length > 2) {
+            switch (scan[1]) {
+                case "-t":
+                    switch (scan[2]) {
+                        case "-EU":
+                            System.out.println(pause());
+                            System.out.println(sector.createPrint(sector.scheduledEUDeparturesByTime(), "D"));
+                            break;
+                        case "-CZ":
+                            System.out.println(pause());
+                            System.out.println(sector.createPrint(sector.scheduledCZDeparturesByTime(), "D"));
+                            break;
+                        default:
+                            System.out.println("Invalid command combination.");
+                            break;
+                    }
+                    break;
+                case "-d":
+                    switch (scan[2]) {
+                        case "-EU":
+                            System.out.println(pause());
+                            System.out.println(sector.createPrint(sector.scheduledEUDeparturesByDestination(), "D"));
+                            break;
+                        case "-CZ":
+                            System.out.println(pause());
+                            System.out.println(sector.createPrint(sector.scheduledCZDeparturesByDestination(), "D"));
+                            break;
+                        default:
+                            System.out.println("Invalid command combination.");
+                            break;
+                    }
+                default:
+                    System.out.println("Invalid command combination.");
+
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Switch for command -s
+     *
+     * @param scan - String array with user input sequence
+     */
+    public static void saveCommandSwitch(String[] scan) {
+        if (scan.length < 3) {
+            System.out.println("Can not operate without filename and command.");
+        } else if ((!scan[1].substring(scan[1].length() - 4, scan[1].length()).equals(".txt")) && (!scan[1].substring(scan[1].length() - 4, scan[1].length()).equals(".bin"))) {
+            System.out.println("Invalid file format.");
+        } else {
+            ArrayList<String> commands = new ArrayList(Arrays.asList("-home", "-about", "-h", "-arrivals", "-departures", "-airtypes", "-airtypesf"));                   //nedokonceno
+            if (!commands.contains(scan[2])) {
+                System.out.println("Unsaveable command.");
+            } else {
+                try {
+                    switch (scan[2]) {
+                        case "-home":
+                            FileOperations.save(dashboard(), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                            break;
+                        case "-h":
+                            FileOperations.save(help(), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                            break;
+
+                        case "-about":
+                            FileOperations.save(about(), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                            break;
+
+                        case "-arrivals":
+                            if (scan.length == 3) {
+                                FileOperations.save(sector.createPrint(sector.scheduledArrivalsByTime(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                break;
+                            }
+                            if (scan.length == 4) {
+                                if (scan[3].equals("-t")) {
                                     FileOperations.save(sector.createPrint(sector.scheduledArrivalsByTime(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
                                     break;
                                 }
-                                if (scan.length == 4) {
-                                    if (scan[3].equals("-t")) {
-                                        FileOperations.save(sector.createPrint(sector.scheduledArrivalsByTime(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                if (scan[3].equals("-d")) {
+                                    FileOperations.save(sector.createPrint(sector.scheduledArrivalsByDestination(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                    break;
+                                }
+                                if (scan.length > 4) {
+                                    if (scan[3].equals("-t") && scan[4].equals("-EU")) {
+                                        FileOperations.save(sector.createPrint(sector.scheduledEUArrivalsByTime(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
                                         break;
                                     }
-                                    if (scan[3].equals("-d")) {
-                                        FileOperations.save(sector.createPrint(sector.scheduledArrivalsByDestination(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                    if (scan[3].equals("-d") && scan[4].equals("-EU")) {
+                                        FileOperations.save(sector.createPrint(sector.scheduledEUArrivalsByDestination(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
                                         break;
                                     }
-                                    if (scan.length > 4) {
-                                        if (scan[3].equals("-t") && scan[4].equals("-EU")) {
-                                            FileOperations.save(sector.createPrint(sector.scheduledEUArrivalsByTime(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                            break;
-                                        }
-                                        if (scan[3].equals("-d") && scan[4].equals("-EU")) {
-                                            FileOperations.save(sector.createPrint(sector.scheduledEUArrivalsByDestination(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                            break;
-                                        }
-                                        if (scan[3].equals("-t") && scan[4].equals("-CZ")) {
-                                            FileOperations.save(sector.createPrint(sector.scheduledCZArrivalsByTime(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                            break;
-                                        }
-                                        if (scan[3].equals("-d") && scan[4].equals("-CZ")) {
-                                            FileOperations.save(sector.createPrint(sector.scheduledCZArrivalsByDestination(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                            break;
-                                        }
+                                    if (scan[3].equals("-t") && scan[4].equals("-CZ")) {
+                                        FileOperations.save(sector.createPrint(sector.scheduledCZArrivalsByTime(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                        break;
+                                    }
+                                    if (scan[3].equals("-d") && scan[4].equals("-CZ")) {
+                                        FileOperations.save(sector.createPrint(sector.scheduledCZArrivalsByDestination(), "A"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                        break;
                                     }
                                 }
-                            case "-departures":
-                                if (scan.length == 3) {
+                            }
+                        case "-departures":
+                            if (scan.length == 3) {
+                                FileOperations.save(sector.createPrint(sector.scheduledDeparturesByTime(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                break;
+                            }
+                            if (scan.length == 4) {
+                                if (scan[1].equals("-t")) {
                                     FileOperations.save(sector.createPrint(sector.scheduledDeparturesByTime(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
                                     break;
                                 }
-                                if (scan.length == 4) {
-                                    if (scan[1].equals("-t")) {
-                                        FileOperations.save(sector.createPrint(sector.scheduledDeparturesByTime(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                if (scan[3].equals("-d")) {
+                                    FileOperations.save(sector.createPrint(sector.scheduledDeparturesByDestination(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                    break;
+                                }
+                                if (scan.length > 4) {
+                                    if (scan[3].equals("-t") && scan[4].equals("-EU")) {
+                                        FileOperations.save(sector.createPrint(sector.scheduledEUDeparturesByTime(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
                                         break;
                                     }
-                                    if (scan[3].equals("-d")) {
-                                        FileOperations.save(sector.createPrint(sector.scheduledDeparturesByDestination(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                    if (scan[3].equals("-d") && scan[4].equals("-EU")) {
+                                        FileOperations.save(sector.createPrint(sector.scheduledEUDeparturesByDestination(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
                                         break;
                                     }
-                                    if (scan.length > 4) {
-                                        if (scan[3].equals("-t") && scan[4].equals("-EU")) {
-                                            FileOperations.save(sector.createPrint(sector.scheduledEUDeparturesByTime(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                            break;
-                                        }
-                                        if (scan[3].equals("-d") && scan[4].equals("-EU")) {
-                                            FileOperations.save(sector.createPrint(sector.scheduledEUDeparturesByDestination(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                            break;
-                                        }
-                                        if (scan[3].equals("-t") && scan[4].equals("-CZ")) {
-                                            FileOperations.save(sector.createPrint(sector.scheduledCZDeparturesByTime(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                            break;
-                                        }
-                                        if (scan[3].equals("-d") && scan[4].equals("-CZ")) {
-                                            FileOperations.save(sector.createPrint(sector.scheduledCZDeparturesByDestination(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                            break;
-                                        }
+                                    if (scan[3].equals("-t") && scan[4].equals("-CZ")) {
+                                        FileOperations.save(sector.createPrint(sector.scheduledCZDeparturesByTime(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                        break;
+                                    }
+                                    if (scan[3].equals("-d") && scan[4].equals("-CZ")) {
+                                        FileOperations.save(sector.createPrint(sector.scheduledCZDeparturesByDestination(), "D"), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                                        break;
                                     }
                                 }
-                            case "-airtypes":
-                                FileOperations.save(sector.createPrintAircraftTypes(sector.currentAirwindowAircraftTypes()), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                break;
-                            case "-airtypesf":
-                                FileOperations.save(sector.createPrintAircraftTypes(sector.scheduledAircraftTypes()), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
-                                break;
+                            }
+                        case "-airtypes":
+                            FileOperations.save(sector.createPrintAircraftTypes(sector.currentAirwindowAircraftTypes()), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                            break;
+                        case "-airtypesf":
+                            FileOperations.save(sector.createPrintAircraftTypes(sector.scheduledAircraftTypes()), scan[1], sector.getLastrefresht(), sector.getLastrefreshd(), sector.getTZ());
+                            break;
 
-                            default:
-                                break;
-
-                        }
+                        default:
+                            break;
                     }
+                } catch (IOException ex) {
+                    System.out.println("File could not be saved.");
                 }
+            }
         }
     }
 

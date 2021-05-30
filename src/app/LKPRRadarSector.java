@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -557,7 +556,7 @@ public class LKPRRadarSector implements RadarInfo {
         try {
             FileOperations.save(printCurrentAirWindow(), filename, lastrefresht, lastrefreshd, TIMEZONE);
         } catch (IOException ex) {
-            Logger.getLogger(LKPRRadarSector.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Unable to save output.");
         }
     }
 
@@ -571,7 +570,7 @@ public class LKPRRadarSector implements RadarInfo {
             String pause=System.getProperty("line.separator")+System.getProperty("line.separator");
             save(dashboard()+pause+createPrint(scheduledDeparturesByTime(),"D")+pause+createPrint(scheduledArrivalsByTime(),"A")+pause+createPrintAircraftTypes(scheduledAircraftTypes()),filename,lastrefresht, lastrefreshd, TIMEZONE);
         } catch (IOException ex) {
-            Logger.getLogger(LKPRRadarSector.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Unable to save output.");
         }
     }
 

@@ -145,22 +145,7 @@ public class Aircraft implements Comparable<Aircraft> {
                 if (airInfo[6] != null) {
                     a.setDestCode(airInfo[6]);
                 }
-                /*
-                if (airInfo[10] != null || !airInfo[10].equals(" ")) {
-                    switch (airInfo[11]) {
-                        case "a":
-                            timeAppend = "AM";
-                            break;
-                        case "p":
-                            timeAppend = "PM";
-                            break;
-                    }
-                    LocalTime time2 = LocalTime.parse(airInfo[10] + " " + timeAppend, formatter);
-                    a.setLanding(time2);
-                }
-                if (airInfo[12] != null) {
-                    a.setLandingTZ(airInfo[9]);
-                }*/
+                
                 return a;
             }
         }
