@@ -56,7 +56,7 @@ public class SmartUI {
         String testFile = "TestData.csv";
         LocalTime time = LocalTime.of(19, 18);
         try{
-        File sourcefile = new File(System.getProperty("user.dir") + File.separator + "ArtificialData" + File.separator + testFile);
+        File sourcefile = new File(System.getProperty("user.dir") + File.separator + "TESTING" + File.separator + testFile);
         String[][] airlist = new String[21][14];
         try (BufferedReader br = new BufferedReader(new FileReader(sourcefile))) {
             String line;
